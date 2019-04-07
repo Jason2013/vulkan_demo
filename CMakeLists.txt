@@ -32,8 +32,6 @@ target_compile_options(${TARGET_NAME} PRIVATE
 set(GLSL_COMPILER ${VULKAN_DIR}/Bin/glslangValidator)
 add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_CURRENT_BINARY_DIR}/shaders"
-    # COMMAND glslangValidator -V -o ${CMAKE_CURRENT_BINARY_DIR}/shaders/vert.spv ${CMAKE_CURRENT_SOURCE_DIR}/../25_shader_textures.vert
-    # COMMAND glslangValidator -V -o ${CMAKE_CURRENT_BINARY_DIR}/shaders/frag.spv ${CMAKE_CURRENT_SOURCE_DIR}/../25_shader_textures.frag
     COMMAND ${GLSL_COMPILER} -V -o ${CMAKE_CURRENT_BINARY_DIR}/shaders/vert.spv ${CMAKE_CURRENT_SOURCE_DIR}/main.vert
     COMMAND ${GLSL_COMPILER} -V -o ${CMAKE_CURRENT_BINARY_DIR}/shaders/frag.spv ${CMAKE_CURRENT_SOURCE_DIR}/main.frag
     COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_CURRENT_BINARY_DIR}/textures"
