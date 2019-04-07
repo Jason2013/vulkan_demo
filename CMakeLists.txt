@@ -23,11 +23,14 @@ set(TARGET_NAME vulkan_demo)
 
 add_executable(${TARGET_NAME}
     main.cpp
+	md2.cpp
     )
 
 target_compile_options(${TARGET_NAME} PRIVATE
     /std:c++17
     )
+
+target_compile_definitions(${TARGET_NAME} PRIVATE NOMINMAX)
 
 set(GLSL_COMPILER ${VULKAN_DIR}/Bin/glslangValidator)
 add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
@@ -38,4 +41,5 @@ add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_SOURCE_DIR}/textures/uvtemplate.bmp ${CMAKE_CURRENT_BINARY_DIR}/textures/uvtemplate.bmp
     COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_CURRENT_BINARY_DIR}/models"
     COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_SOURCE_DIR}/models/chalet.obj ${CMAKE_CURRENT_BINARY_DIR}/models/chalet.obj
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_SOURCE_DIR}/models/Tris.MD2 ${CMAKE_CURRENT_BINARY_DIR}/models/Tris.MD2
     )

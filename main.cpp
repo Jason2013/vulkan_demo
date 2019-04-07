@@ -27,6 +27,8 @@
 #include <set>
 #include <unordered_map>
 
+#include "md2.h"
+
 const int WIDTH = 800;
 const int HEIGHT = 600;
 
@@ -235,6 +237,8 @@ private:
     VkDeviceMemory indexBufferMemory;
 
     MyBuffer buffer1, buffer2, buffer3;
+    //CMD2Model a{ NULL, NULL };// nullptr);// ("aa");// "Tris", (const char*)nullptr);
+    CMD2Model Ogro{ "models/Tris.MD2", NULL };// nullptr);// ("aa");// "Tris", (const char*)nullptr);
 
     std::vector<VkBuffer> uniformBuffers;
     std::vector<VkDeviceMemory> uniformBuffersMemory;
