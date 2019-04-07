@@ -1129,26 +1129,54 @@ private:
         buffer1.vertices = vertices;
         buffer1.indices = indices;
 
-        transform(vertices.cbegin(), vertices.cend(), back_inserter(buffer2.vertices), [](Vertex x)
-        {
-            Vertex y;
-            y = x;
-            y.pos.y = x.pos.y / 2.0f;
-            y.pos.x = (x.pos.x - 1.0f) / 2.0f;
-            y.pos.z = x.pos.z / 2.0f;
-            return y;
-        });
-        buffer2.indices = indices;
+        const auto vList = &Ogro.vertexList[Ogro.numVertices * 0];
+        const auto nextVList = &Ogro.vertexList[Ogro.numVertices* 1 ];
+        //nextVList = &vertexList[numVertices*nextFrame];
 
-        transform(vertices.cbegin(), vertices.cend(), back_inserter(buffer3.vertices), [](Vertex x)
+        buffer2.vertices.clear();
+        for (int i = 0; i < Ogro.numVertices; i++)
         {
-            Vertex y;
-            y = x;
-            y.pos.y = x.pos.y / 2.0f;
-            y.pos.x = (x.pos.x + 1.0f) / 2.0f;
-            y.pos.z = x.pos.z / 2.0f;
-            return y;
-        });
+            Vertex vt = {};
+
+            vt.pos.x = vList[i].point[0];
+            vt.pos.y = vList[i].point[1];
+            vt.pos.z = vList[i].point[2];
+            buffer2.vertices.push_back(vt);
+            //
+        }
+
+        //transform(vertices.cbegin(), vertices.cend(), back_inserter(buffer2.vertices), [](Vertex x)
+        //{
+        //    Vertex y;
+        //    y = x;
+        //    y.pos.y = x.pos.y / 2.0f;
+        //    y.pos.x = (x.pos.x - 1.0f) / 2.0f;
+        //    y.pos.z = x.pos.z / 2.0f;
+        //    return y;
+        //});
+        buffer2.indices = Ogro.indices;
+
+        //transform(vertices.cbegin(), vertices.cend(), back_inserter(buffer3.vertices), [](Vertex x)
+        //{
+        //    Vertex y;
+        //    y = x;
+        //    y.pos.y = x.pos.y / 2.0f;
+        //    y.pos.x = (x.pos.x + 1.0f) / 2.0f;
+        //    y.pos.z = x.pos.z / 2.0f;
+        //    return y;
+        //});
+
+        buffer3.vertices.clear();
+        for (int i = 0; i < Ogro.numVertices; i++)
+        {
+            Vertex vt = {};
+
+            vt.pos.x = nextVList[i].point[0];
+            vt.pos.y = nextVList[i].point[1];
+            vt.pos.z = nextVList[i].point[2];
+            buffer3.vertices.push_back(vt);
+            //
+        }
         buffer3.indices = indices;
     }
 
