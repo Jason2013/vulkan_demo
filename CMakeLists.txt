@@ -36,8 +36,8 @@ add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
     # COMMAND glslangValidator -V -o ${CMAKE_CURRENT_BINARY_DIR}/shaders/frag.spv ${CMAKE_CURRENT_SOURCE_DIR}/../25_shader_textures.frag
     COMMAND ${GLSL_COMPILER} -V -o ${CMAKE_CURRENT_BINARY_DIR}/shaders/vert.spv ${CMAKE_CURRENT_SOURCE_DIR}/main.vert
     COMMAND ${GLSL_COMPILER} -V -o ${CMAKE_CURRENT_BINARY_DIR}/shaders/frag.spv ${CMAKE_CURRENT_SOURCE_DIR}/main.frag
-    # COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_CURRENT_BINARY_DIR}/textures"
-    # COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_SOURCE_DIR}/uvtemplate.bmp ${CMAKE_CURRENT_BINARY_DIR}/textures/uvtemplate.bmp
-    # COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_CURRENT_BINARY_DIR}/models"
-    # COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_SOURCE_DIR}/chalet.obj ${CMAKE_CURRENT_BINARY_DIR}/models/chalet.obj
+    COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_CURRENT_BINARY_DIR}/textures"
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_SOURCE_DIR}/textures/uvtemplate.bmp ${CMAKE_CURRENT_BINARY_DIR}/textures/uvtemplate.bmp
+    COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_CURRENT_BINARY_DIR}/models"
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_SOURCE_DIR}/models/chalet.obj ${CMAKE_CURRENT_BINARY_DIR}/models/chalet.obj
     )
