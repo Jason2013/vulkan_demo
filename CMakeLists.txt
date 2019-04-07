@@ -29,14 +29,15 @@ target_compile_options(${TARGET_NAME} PRIVATE
     /std:c++17
     )
 
-# add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-#     COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_CURRENT_BINARY_DIR}/shaders"
-#     # COMMAND glslangValidator -V -o ${CMAKE_CURRENT_BINARY_DIR}/shaders/vert.spv ${CMAKE_CURRENT_SOURCE_DIR}/../25_shader_textures.vert
-#     # COMMAND glslangValidator -V -o ${CMAKE_CURRENT_BINARY_DIR}/shaders/frag.spv ${CMAKE_CURRENT_SOURCE_DIR}/../25_shader_textures.frag
-#     COMMAND glslangValidator -V -o ${CMAKE_CURRENT_BINARY_DIR}/shaders/vert2.spv ${CMAKE_CURRENT_SOURCE_DIR}/27_model_loading2.vert
-#     COMMAND glslangValidator -V -o ${CMAKE_CURRENT_BINARY_DIR}/shaders/frag2.spv ${CMAKE_CURRENT_SOURCE_DIR}/27_model_loading2.frag
-#     COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_CURRENT_BINARY_DIR}/textures"
-#     COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_SOURCE_DIR}/uvtemplate.bmp ${CMAKE_CURRENT_BINARY_DIR}/textures/uvtemplate.bmp
-#     COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_CURRENT_BINARY_DIR}/models"
-#     COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_SOURCE_DIR}/chalet.obj ${CMAKE_CURRENT_BINARY_DIR}/models/chalet.obj
-#     )
+set(GLSL_COMPILER ${VULKAN_DIR}/Bin/glslangValidator)
+add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_CURRENT_BINARY_DIR}/shaders"
+    # COMMAND glslangValidator -V -o ${CMAKE_CURRENT_BINARY_DIR}/shaders/vert.spv ${CMAKE_CURRENT_SOURCE_DIR}/../25_shader_textures.vert
+    # COMMAND glslangValidator -V -o ${CMAKE_CURRENT_BINARY_DIR}/shaders/frag.spv ${CMAKE_CURRENT_SOURCE_DIR}/../25_shader_textures.frag
+    COMMAND ${GLSL_COMPILER} -V -o ${CMAKE_CURRENT_BINARY_DIR}/shaders/vert.spv ${CMAKE_CURRENT_SOURCE_DIR}/main.vert
+    COMMAND ${GLSL_COMPILER} -V -o ${CMAKE_CURRENT_BINARY_DIR}/shaders/frag.spv ${CMAKE_CURRENT_SOURCE_DIR}/main.frag
+    # COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_CURRENT_BINARY_DIR}/textures"
+    # COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_SOURCE_DIR}/uvtemplate.bmp ${CMAKE_CURRENT_BINARY_DIR}/textures/uvtemplate.bmp
+    # COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_CURRENT_BINARY_DIR}/models"
+    # COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_SOURCE_DIR}/chalet.obj ${CMAKE_CURRENT_BINARY_DIR}/models/chalet.obj
+    )
