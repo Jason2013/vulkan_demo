@@ -213,8 +213,8 @@ int CMD2Model::Load(const char *modelFile, const char *skinFile)
      //}
      for (i = 0; i < numST; i++)
      {
-         st[i].s = (float)stPtr[i].s;// / (float)modelTex->width;
-         st[i].t = (float)stPtr[i].t;// / (float)modelTex->height;
+         st[i].s = (float)stPtr[i].s / (float)modelHeader->skinwidth;
+         st[i].t = (float)stPtr[i].t / (float)modelHeader->skinheight;
      }
 
      
