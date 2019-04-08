@@ -1141,6 +1141,9 @@ private:
             vt.pos.x = vList[i].point[0];
             vt.pos.y = vList[i].point[1];
             vt.pos.z = vList[i].point[2];
+
+            vt.texCoord = glm::vec2(Ogro.texCoords[i].s, Ogro.texCoords[i].t);
+
             buffer2.vertices.push_back(vt);
             //
         }
@@ -1174,10 +1177,13 @@ private:
             vt.pos.x = nextVList[i].point[0];
             vt.pos.y = nextVList[i].point[1];
             vt.pos.z = nextVList[i].point[2];
+
+            vt.texCoord = glm::vec2(Ogro.texCoords[i].s, Ogro.texCoords[i].t);
+
             buffer3.vertices.push_back(vt);
             //
         }
-        buffer3.indices = indices;
+        buffer3.indices = Ogro.indices;
     }
 
     void createVertexBuffer(void* vertexData, size_t size, VkBuffer& vertexBuffer, VkDeviceMemory& vertexBufferMemory) {
