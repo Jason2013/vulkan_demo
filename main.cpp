@@ -1129,12 +1129,13 @@ private:
         buffer1.vertices = vertices;
         buffer1.indices = indices;
 
-        const auto vList = &Ogro.vertexList[Ogro.numVertices * 0];
-        const auto nextVList = &Ogro.vertexList[Ogro.numVertices* 1 ];
+        int startFrame = 0;
+        const auto vList = &Ogro.vertexList[Ogro.numVertices * startFrame];
+        const auto nextVList = &Ogro.vertexList[Ogro.numVertices* (startFrame+1)];
         //nextVList = &vertexList[numVertices*nextFrame];
 
         buffer2.vertices.clear();
-        for (int i = 0; i < Ogro.numVertices; i++)
+        for (int i = 0; i < Ogro.numVertices * 2; i++)
         {
             Vertex vt = {};
 
@@ -1142,7 +1143,7 @@ private:
             vt.pos.y = vList[i].point[1];
             vt.pos.z = vList[i].point[2];
 
-            vt.texCoord = glm::vec2(Ogro.texCoords[i].s, Ogro.texCoords[i].t);
+            vt.texCoord = glm::vec2(Ogro.texCoords[i%Ogro.numVertices].s, Ogro.texCoords[i%Ogro.numVertices].t);
 
             buffer2.vertices.push_back(vt);
             //
@@ -1170,7 +1171,7 @@ private:
         //});
 
         buffer3.vertices.clear();
-        for (int i = 0; i < Ogro.numVertices; i++)
+        for (int i = 0; i < Ogro.numVertices * 2; i++)
         {
             Vertex vt = {};
 
@@ -1178,7 +1179,7 @@ private:
             vt.pos.y = nextVList[i].point[1];
             vt.pos.z = nextVList[i].point[2];
 
-            vt.texCoord = glm::vec2(Ogro.texCoords[i].s, Ogro.texCoords[i].t);
+            vt.texCoord = glm::vec2(Ogro.texCoords[i%Ogro.numVertices].s, Ogro.texCoords[i%Ogro.numVertices].t);
 
             buffer3.vertices.push_back(vt);
             //
@@ -1430,8 +1431,8 @@ private:
 
                 vkCmdBindPipeline(commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, graphicsPipeline);
 
-                VkBuffer vertexBuffers[] = { buffer2.vertexBuffer, buffer3.vertexBuffer };
-                VkDeviceSize offsets[] = { 0,0 };
+                VkBuffer vertexBuffers[] = { buffer2.vertexBuffer, buffer2.vertexBuffer };
+                VkDeviceSize offsets[] = { 0,buffer2.vertices.size() / 2 * sizeof(Vertex) };
                 vkCmdBindVertexBuffers(commandBuffers[i], 0, 2, vertexBuffers, offsets);
 
                 vkCmdBindIndexBuffer(commandBuffers[i], buffer2.indexBuffer, 0, VK_INDEX_TYPE_UINT32);
