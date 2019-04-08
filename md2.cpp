@@ -245,7 +245,14 @@ int CMD2Model::Load(const char *modelFile, const char *skinFile)
          indices.push_back(triIndex[i].meshIndex[1]);
          indices.push_back(triIndex[i].meshIndex[2]);
      }
-     
+
+     texCoords.resize(numVertices);
+     for (auto i : indices)
+     {
+         assert(i < numVertices);
+         texCoords[i] = st[i];
+     }
+
      // close file and free memory
      fclose(filePtr);
 	delete buffer;

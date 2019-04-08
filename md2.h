@@ -124,6 +124,7 @@ public:
      vector_t *vertexList;    // vertex list
      //CTexture *modelTex;     // texture data
      std::vector<uint32_t> indices;
+     std::vector<texCoord_t> texCoords;
 
      //void SetupSkin(CTexture *thisTexture);
 
