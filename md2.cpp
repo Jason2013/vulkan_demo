@@ -247,10 +247,19 @@ int CMD2Model::Load(const char *modelFile, const char *skinFile)
      }
 
      texCoords.resize(numVertices);
-     for (auto i : indices)
+     for (i = 0; i < numTriangles; i++)
      {
-         assert(i < numVertices);
-         texCoords[i] = st[i];
+         assert(triIndex[i].meshIndex[0] < numVertices);
+         assert(triIndex[i].meshIndex[1] < numVertices);
+         assert(triIndex[i].meshIndex[2] < numVertices);
+
+         assert(triIndex[i].stIndex[0] < numST);
+         assert(triIndex[i].stIndex[1] < numST);
+         assert(triIndex[i].stIndex[2] < numST);
+
+         texCoords[triIndex[i].meshIndex[0]] = st[triIndex[i].stIndex[0]];
+         texCoords[triIndex[i].meshIndex[1]] = st[triIndex[i].stIndex[1]];
+         texCoords[triIndex[i].meshIndex[2]] = st[triIndex[i].stIndex[2]];
      }
 
      // close file and free memory
