@@ -16,6 +16,10 @@
 
 ![Screen Shot 1](https://github.com/Jason2013/vulkan_demo/blob/master/docs/screenshot.png)
 
+**Screencast:**
+
+[Watch on Youtube](https://youtu.be/hbSMGDGro1c)
+
 # Build from source code
 
 1. **Clone the source code from github**:
