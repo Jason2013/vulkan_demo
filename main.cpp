@@ -240,7 +240,7 @@ private:
     VkImageView textureImageView;
     VkSampler textureSampler;
 
-    MyBuffer buffer2;
+    MyBuffer mesh;
     CMD2Model Ogro{ MODEL_PATH.c_str() };
 
     std::vector<VkBuffer> uniformBuffers;
@@ -295,7 +295,7 @@ private:
         createTextureImageView();
         createTextureSampler();
         loadModel();
-        createMyBuffer(buffer2);
+        createMyBuffer(mesh);
         createUniformBuffers();
         createDescriptorPool();
         createDescriptorSets();
@@ -352,7 +352,7 @@ private:
             vkFreeMemory(device, uniformBuffersMemory[i], nullptr);
         }
 
-        buffer2.Destroy();
+        mesh.Destroy();
 
         for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
             vkDestroySemaphore(device, renderFinishedSemaphores[i], nullptr);
@@ -1089,7 +1089,7 @@ private:
         const auto vList = &Ogro.vertexList[0];
         //const auto nextVList = &Ogro.vertexList[Ogro.numVertices* (startFrame+1)];
 
-        buffer2.vertices.clear();
+        mesh.vertices.clear();
         for (int i = 0; i < Ogro.numVertices * Ogro.numFrames; i++)
         {
             Vertex vt = {};
@@ -1100,10 +1100,10 @@ private:
 
             vt.texCoord = glm::vec2(Ogro.texCoords[i%Ogro.numVertices].s, Ogro.texCoords[i%Ogro.numVertices].t);
 
-            buffer2.vertices.push_back(vt);
+            mesh.vertices.push_back(vt);
         }
 
-        buffer2.indices = Ogro.indices;
+        mesh.indices = Ogro.indices;
     }
 
     void createVertexBuffer(void* vertexData, size_t size, VkBuffer& vertexBuffer, VkDeviceMemory& vertexBufferMemory) {
@@ -1353,15 +1353,15 @@ private:
 
                 vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, graphicsPipeline);
 
-                VkBuffer vertexBuffers[] = { buffer2.vertexBuffer, buffer2.vertexBuffer };
+                VkBuffer vertexBuffers[] = { mesh.vertexBuffer, mesh.vertexBuffer };
                 VkDeviceSize offsets[] = { j * Ogro.numVertices * sizeof(Vertex), (j + 1) * Ogro.numVertices * sizeof(Vertex) };
                 vkCmdBindVertexBuffers(commandBuffer, 0, 2, vertexBuffers, offsets);
 
-                vkCmdBindIndexBuffer(commandBuffer, buffer2.indexBuffer, 0, VK_INDEX_TYPE_UINT32);
+                vkCmdBindIndexBuffer(commandBuffer, mesh.indexBuffer, 0, VK_INDEX_TYPE_UINT32);
 
                 vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipelineLayout, 0, 1, &descriptorSets[i], 0, nullptr);
 
-                vkCmdDrawIndexed(commandBuffer, static_cast<uint32_t>(buffer2.indices.size()), 1, 0, 0, 0);
+                vkCmdDrawIndexed(commandBuffer, static_cast<uint32_t>(mesh.indices.size()), 1, 0, 0, 0);
 
                 vkCmdEndRenderPass(commandBuffer);
 
