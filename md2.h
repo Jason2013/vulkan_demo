@@ -114,6 +114,8 @@ public:
 
      // free memory of model
      void Unload();
+
+     static int32_t GetNextKeyFrame(int32_t currentKeyFrame, float& nextFrameInterval);
 };
 
 #endif

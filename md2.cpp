@@ -153,3 +153,59 @@ void CMD2Model::Unload()
      if (st != NULL)
           delete [] st;
 }
+
+int32_t CMD2Model::GetNextKeyFrame(int32_t currentKeyFrame, float & nextFrameInterval)
+{
+    struct KeyFrameInfo
+    {
+        int32_t first, last, fps;
+    };
+    static KeyFrameInfo animList[21] =
+    {
+        // first, last, fps
+        { 0,  39,  9 },   // STAND
+        { 40,  45, 10 },   // RUN
+        { 46,  53, 10 },   // ATTACK
+        { 54,  57,  7 },   // PAIN_A
+        { 58,  61,  7 },   // PAIN_B
+        { 62,  65,  7 },   // PAIN_C
+        { 66,  71,  7 },   // JUMP
+        { 72,  83,  7 },   // FLIP
+        { 84,  94,  7 },   // SALUTE
+        { 95, 111, 10 },   // FALLBACK
+        { 112, 122,  7 },   // WAVE
+        { 123, 134,  6 },   // POINT
+        { 135, 153, 10 },   // CROUCH_STAND
+        { 154, 159,  7 },   // CROUCH_WALK
+        { 160, 168, 10 },   // CROUCH_ATTACK
+        { 196, 172,  7 },   // CROUCH_PAIN
+        { 173, 177,  5 },   // CROUCH_DEATH
+        { 178, 183,  7 },   // DEATH_FALLBACK
+        { 184, 189,  7 },   // DEATH_FALLFORWARD
+        { 190, 197,  7 },   // DEATH_FALLBACKSLOW
+        { 198, 199,  5 },   // BOOM
+    };
+
+    for (uint32_t i = 0; i < sizeof(animList) / sizeof(animList[0]); i++)
+    {
+        if (currentKeyFrame >= animList[i].first && currentKeyFrame < (animList[i].last-1))
+        {
+            nextFrameInterval = 1.0f / static_cast<float>(animList[i].fps);
+            return currentKeyFrame + 1;
+        }
+
+        if (currentKeyFrame == (animList[i].last - 1))
+        {
+            uint32_t nextState = i+1;
+            if (nextState == (sizeof(animList) / sizeof(animList[0]) - 1))
+            {
+                nextState = 0;
+            }
+            nextFrameInterval = 1.0f / static_cast<float>(animList[nextState].fps);
+            return animList[nextState].first;
+        }
+    }
+
+    assert(0);
+    return -1;
+}
