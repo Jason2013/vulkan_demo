@@ -1412,9 +1412,24 @@ private:
 
     void updateUniformBuffer(uint32_t currentImage) {
         static auto startTime = std::chrono::high_resolution_clock::now();
+        static auto currentFrameStartTime = std::chrono::high_resolution_clock::now();
+        //static auto frameStartTime = startTime;// std::chrono::high_resolution_clock::now();
 
         auto currentTime = std::chrono::high_resolution_clock::now();
-        float time = std::chrono::duration<float, std::chrono::seconds::period>(currentTime - startTime).count();
+        float currentFrameSpanTime = std::chrono::duration<float, std::chrono::seconds::period>(currentTime - currentFrameStartTime).count();
+
+        if (currentFrameSpanTime >= 1.0f)
+        {
+            currentFrameSpanTime = 0.0f;
+            currentFrameStartTime = currentTime;
+
+            ++modelCurrFrameIdx;
+            if (modelCurrFrameIdx >= (modelFrameNum - 1))
+            {
+                modelCurrFrameIdx = 0;
+            }
+            modelNextFrameIdx = modelCurrFrameIdx + 1;
+        }
 
         UniformBufferObject ubo = {};
         auto a = glm::rotate(glm::mat4(1.0f), /*time **/ glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
@@ -1424,7 +1439,7 @@ private:
         ubo.proj = glm::perspective(glm::radians(45.0f), swapChainExtent.width / (float) swapChainExtent.height, 0.1f, 100.0f);
         ubo.proj[1][1] *= -1;
 
-        ubo.interp = (glm::sin(time) + 1.0f) / 2.0f;
+        ubo.interp = currentFrameSpanTime;// (glm::sin(time) + 1.0f) / 2.0f;
 
         void* data;
         vkMapMemory(device, uniformBuffersMemory[currentImage], 0, sizeof(ubo), 0, &data);
