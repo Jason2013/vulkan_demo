@@ -1413,8 +1413,7 @@ private:
     void updateUniformBuffer(uint32_t currentImage) {
         static auto startTime = std::chrono::high_resolution_clock::now();
         static auto currentFrameStartTime = std::chrono::high_resolution_clock::now();
-        //static auto frameStartTime = startTime;// std::chrono::high_resolution_clock::now();
-        const float frameTime = 0.2f;
+        static float frameTime = -1.0f;
 
         auto currentTime = std::chrono::high_resolution_clock::now();
         float currentFrameSpanTime = std::chrono::duration<float, std::chrono::seconds::period>(currentTime - currentFrameStartTime).count();
@@ -1424,12 +1423,7 @@ private:
             currentFrameSpanTime = 0.0f;
             currentFrameStartTime = currentTime;
 
-            ++modelCurrFrameIdx;
-            if (modelCurrFrameIdx >= (modelFrameNum - 1))
-            {
-                modelCurrFrameIdx = 0;
-            }
-            modelNextFrameIdx = modelCurrFrameIdx + 1;
+            modelCurrFrameIdx = CMD2Model::GetNextKeyFrame(modelCurrFrameIdx, frameTime);
         }
 
         UniformBufferObject ubo = {};
