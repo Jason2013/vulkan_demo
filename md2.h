@@ -37,12 +37,12 @@ typedef struct
    float point[3];
 } vector_t;
 
-vector_t operator-(vector_t a, vector_t b);
-vector_t operator*(float f, vector_t b);
-vector_t operator/(vector_t a, vector_t b);
-vector_t operator+(vector_t a, vector_t b);
-
-void CalculateNormal( float *p1, float *p2, float *p3 );
+//vector_t operator-(vector_t a, vector_t b);
+//vector_t operator*(float f, vector_t b);
+//vector_t operator/(vector_t a, vector_t b);
+//vector_t operator+(vector_t a, vector_t b);
+//
+//void CalculateNormal( float *p1, float *p2, float *p3 );
 
 
 /* 
@@ -147,18 +147,18 @@ public:
      // load model only
      int LoadModel(const char *modelFile);
 
-     // load skin only
-     int LoadSkin(const char *skinFile);
+     //// load skin only
+     //int LoadSkin(const char *skinFile);
 
      // set model's texture/skin
      //int SetTexture(CTexture *texture);
 
      // render model with interpolation to get animation
      //int AnimateModel(int startFrame, int endFrame, float percent);
-	 int AnimateModel(int startFrame, int endFrame, float percent, int & currentFrame, int & nextFrame, float & interpol);
+	 //int AnimateModel(int startFrame, int endFrame, float percent, int & currentFrame, int & nextFrame, float & interpol);
 
-     // render a single frame
-     int RenderFrame(int keyFrame);
+  //   // render a single frame
+  //   int RenderFrame(int keyFrame);
 
      // free memory of model
      void Unload();

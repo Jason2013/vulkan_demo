@@ -421,165 +421,165 @@ int CMD2Model::LoadModel(const char *modelFile)
 //     return 0;
 //}
 
-int CMD2Model::AnimateModel(int startFrame, int endFrame, float percent,
-							 int & currentFrame, int & nextFrame, float & interpol)//, CTexture * modelTex)
-{
-	vector_t *vList;              // current frame vertices
-	vector_t *nextVList;          // next frame vertices
-	int i;                                  // index counter
-	float x1, y1, z1;                  // current frame point values
-	float x2, y2, z2;                  // next frame point values
-
-	vector_t vertex[3]; 
-
-	if ((currentFrame < startFrame) || (currentFrame > endFrame))
-	{
-		currentFrame = (rand() % (endFrame - startFrame)) + startFrame;
-	}
-	nextFrame = currentFrame +1;
-	if (nextFrame > endFrame)
-	{
-		nextFrame = startFrame;
-	}
-
-	if ((startFrame < 0) || (endFrame < 0))
-		return -1;
-
-	if ((startFrame >= numFrames) || (endFrame >= numFrames))
-		return -1;
-
-	if (interpol >= 1.0)
-	{
-		interpol = 0.0f;
-		currentFrame++;
-		if (currentFrame >= endFrame)
-			currentFrame = startFrame;
-
-		nextFrame = currentFrame + 1;
-
-		if (nextFrame >= endFrame)
-			nextFrame = startFrame;
-
-	}
-
-	vList = &vertexList[numVertices*currentFrame];
-	nextVList = &vertexList[numVertices*nextFrame];
-
-	//glColor4f(1.0, 1.0, 1.0, 1.0);
-	//glEnable(GL_TEXTURE_2D);
-	////glBindTexture(GL_TEXTURE_2D, modelTex->texID);
-	//glBegin(GL_TRIANGLES);
-	for (i = 0; i < numTriangles; i++)
-	{
-		// get first points of each frame
-		x1 = vList[triIndex[i].meshIndex[0]].point[0];
-		y1 = vList[triIndex[i].meshIndex[0]].point[1];
-		z1 = vList[triIndex[i].meshIndex[0]].point[2];
-		x2 = nextVList[triIndex[i].meshIndex[0]].point[0];
-		y2 = nextVList[triIndex[i].meshIndex[0]].point[1];
-		z2 = nextVList[triIndex[i].meshIndex[0]].point[2];
-
-		// store first interpolated vertex of triangle
-		vertex[0].point[0] = x1 + interpol * (x2 - x1);
-		vertex[0].point[1] = y1 + interpol * (y2 - y1);
-		vertex[0].point[2] = z1 + interpol * (z2 - z1);
-
-		// get second points of each frame
-		x1 = vList[triIndex[i].meshIndex[2]].point[0];
-		y1 = vList[triIndex[i].meshIndex[2]].point[1];
-		z1 = vList[triIndex[i].meshIndex[2]].point[2];
-		x2 = nextVList[triIndex[i].meshIndex[2]].point[0];
-		y2 = nextVList[triIndex[i].meshIndex[2]].point[1];
-		z2 = nextVList[triIndex[i].meshIndex[2]].point[2];
-
-		// store second interpolated vertex of triangle
-		vertex[2].point[0] = x1 + interpol * (x2 - x1);
-		vertex[2].point[1] = y1 + interpol * (y2 - y1);
-		vertex[2].point[2] = z1 + interpol * (z2 - z1);   
-
-		// get third points of each frame
-		x1 = vList[triIndex[i].meshIndex[1]].point[0];
-		y1 = vList[triIndex[i].meshIndex[1]].point[1];
-		z1 = vList[triIndex[i].meshIndex[1]].point[2];
-		x2 = nextVList[triIndex[i].meshIndex[1]].point[0];
-		y2 = nextVList[triIndex[i].meshIndex[1]].point[1];
-		z2 = nextVList[triIndex[i].meshIndex[1]].point[2];
-
-		// store third interpolated vertex of triangle
-		vertex[1].point[0] = x1 + interpol * (x2 - x1);
-		vertex[1].point[1] = y1 + interpol * (y2 - y1);
-		vertex[1].point[2] = z1 + interpol * (z2 - z1);
-
-		// calculate the normal of the triangle
-        // 不启用光照，可以关闭法线计算
-		//CalculateNormal(vertex[0].point, vertex[2].point, vertex[1].point);
-
-		//// render properly textured triangle
-		//glTexCoord2f(st[triIndex[i].stIndex[0]].s,
-		//	st[triIndex[i].stIndex[0]].t);
-		//glVertex3fv(vertex[0].point);
-
-		//glTexCoord2f(st[triIndex[i].stIndex[2]].s ,
-		//	st[triIndex[i].stIndex[2]].t);
-		//glVertex3fv(vertex[2].point);
-
-		//glTexCoord2f(st[triIndex[i].stIndex[1]].s,
-		//	st[triIndex[i].stIndex[1]].t);
-		//glVertex3fv(vertex[1].point);
-	}
-	//glEnd();
-	//glDisable(GL_TEXTURE_2D);
-
-	interpol += percent;  // increase percentage of interpolation between frames
-
-	return 0;
-}
+//int CMD2Model::AnimateModel(int startFrame, int endFrame, float percent,
+//							 int & currentFrame, int & nextFrame, float & interpol)//, CTexture * modelTex)
+//{
+//	vector_t *vList;              // current frame vertices
+//	vector_t *nextVList;          // next frame vertices
+//	int i;                                  // index counter
+//	float x1, y1, z1;                  // current frame point values
+//	float x2, y2, z2;                  // next frame point values
+//
+//	vector_t vertex[3]; 
+//
+//	if ((currentFrame < startFrame) || (currentFrame > endFrame))
+//	{
+//		currentFrame = (rand() % (endFrame - startFrame)) + startFrame;
+//	}
+//	nextFrame = currentFrame +1;
+//	if (nextFrame > endFrame)
+//	{
+//		nextFrame = startFrame;
+//	}
+//
+//	if ((startFrame < 0) || (endFrame < 0))
+//		return -1;
+//
+//	if ((startFrame >= numFrames) || (endFrame >= numFrames))
+//		return -1;
+//
+//	if (interpol >= 1.0)
+//	{
+//		interpol = 0.0f;
+//		currentFrame++;
+//		if (currentFrame >= endFrame)
+//			currentFrame = startFrame;
+//
+//		nextFrame = currentFrame + 1;
+//
+//		if (nextFrame >= endFrame)
+//			nextFrame = startFrame;
+//
+//	}
+//
+//	vList = &vertexList[numVertices*currentFrame];
+//	nextVList = &vertexList[numVertices*nextFrame];
+//
+//	//glColor4f(1.0, 1.0, 1.0, 1.0);
+//	//glEnable(GL_TEXTURE_2D);
+//	////glBindTexture(GL_TEXTURE_2D, modelTex->texID);
+//	//glBegin(GL_TRIANGLES);
+//	for (i = 0; i < numTriangles; i++)
+//	{
+//		// get first points of each frame
+//		x1 = vList[triIndex[i].meshIndex[0]].point[0];
+//		y1 = vList[triIndex[i].meshIndex[0]].point[1];
+//		z1 = vList[triIndex[i].meshIndex[0]].point[2];
+//		x2 = nextVList[triIndex[i].meshIndex[0]].point[0];
+//		y2 = nextVList[triIndex[i].meshIndex[0]].point[1];
+//		z2 = nextVList[triIndex[i].meshIndex[0]].point[2];
+//
+//		// store first interpolated vertex of triangle
+//		vertex[0].point[0] = x1 + interpol * (x2 - x1);
+//		vertex[0].point[1] = y1 + interpol * (y2 - y1);
+//		vertex[0].point[2] = z1 + interpol * (z2 - z1);
+//
+//		// get second points of each frame
+//		x1 = vList[triIndex[i].meshIndex[2]].point[0];
+//		y1 = vList[triIndex[i].meshIndex[2]].point[1];
+//		z1 = vList[triIndex[i].meshIndex[2]].point[2];
+//		x2 = nextVList[triIndex[i].meshIndex[2]].point[0];
+//		y2 = nextVList[triIndex[i].meshIndex[2]].point[1];
+//		z2 = nextVList[triIndex[i].meshIndex[2]].point[2];
+//
+//		// store second interpolated vertex of triangle
+//		vertex[2].point[0] = x1 + interpol * (x2 - x1);
+//		vertex[2].point[1] = y1 + interpol * (y2 - y1);
+//		vertex[2].point[2] = z1 + interpol * (z2 - z1);   
+//
+//		// get third points of each frame
+//		x1 = vList[triIndex[i].meshIndex[1]].point[0];
+//		y1 = vList[triIndex[i].meshIndex[1]].point[1];
+//		z1 = vList[triIndex[i].meshIndex[1]].point[2];
+//		x2 = nextVList[triIndex[i].meshIndex[1]].point[0];
+//		y2 = nextVList[triIndex[i].meshIndex[1]].point[1];
+//		z2 = nextVList[triIndex[i].meshIndex[1]].point[2];
+//
+//		// store third interpolated vertex of triangle
+//		vertex[1].point[0] = x1 + interpol * (x2 - x1);
+//		vertex[1].point[1] = y1 + interpol * (y2 - y1);
+//		vertex[1].point[2] = z1 + interpol * (z2 - z1);
+//
+//		// calculate the normal of the triangle
+//        // 不启用光照，可以关闭法线计算
+//		//CalculateNormal(vertex[0].point, vertex[2].point, vertex[1].point);
+//
+//		//// render properly textured triangle
+//		//glTexCoord2f(st[triIndex[i].stIndex[0]].s,
+//		//	st[triIndex[i].stIndex[0]].t);
+//		//glVertex3fv(vertex[0].point);
+//
+//		//glTexCoord2f(st[triIndex[i].stIndex[2]].s ,
+//		//	st[triIndex[i].stIndex[2]].t);
+//		//glVertex3fv(vertex[2].point);
+//
+//		//glTexCoord2f(st[triIndex[i].stIndex[1]].s,
+//		//	st[triIndex[i].stIndex[1]].t);
+//		//glVertex3fv(vertex[1].point);
+//	}
+//	//glEnd();
+//	//glDisable(GL_TEXTURE_2D);
+//
+//	interpol += percent;  // increase percentage of interpolation between frames
+//
+//	return 0;
+//}
 
 
 // RenderFrame()
 // desc: renders a single key frame
-int CMD2Model::RenderFrame(int keyFrame)
-{
-     vector_t *vList;
-     int i;
-     
-     // create a pointer to the frame we want to show
-     vList = &vertexList[numVertices * keyFrame];
-     
-	//if (modelTex != NULL)
-	//	// set the texture
-	//	glBindTexture(GL_TEXTURE_2D, modelTex->texID);
-     
-     // display the textured model with proper lighting normals
-     //glBegin(GL_TRIANGLES);
-     for(i = 0; i < numTriangles; i++)
-     {
-          //CalculateNormal(vList[triIndex[i].meshIndex[0]].point,
-          //     vList[triIndex[i].meshIndex[2]].point,
-          //     vList[triIndex[i].meshIndex[1]].point);
-
-		//if (modelTex != NULL)
-		//	glTexCoord2f(st[triIndex[i].stIndex[0]].s,
-		//		st[triIndex[i].stIndex[0]].t);
-
-          //glVertex3fv(vList[triIndex[i].meshIndex[0]].point);
-          
-		//if (modelTex != NULL)
-		//	glTexCoord2f(st[triIndex[i].stIndex[2]].s ,
-		//		st[triIndex[i].stIndex[2]].t);
-
-          //glVertex3fv(vList[triIndex[i].meshIndex[2]].point);
-          
-		//if (modelTex != NULL)
-		//	glTexCoord2f(st[triIndex[i].stIndex[1]].s,
-		//		st[triIndex[i].stIndex[1]].t);
-
-          //glVertex3fv(vList[triIndex[i].meshIndex[1]].point);
-     }
-     //glEnd();
-     
-     return 0;
-}
+//int CMD2Model::RenderFrame(int keyFrame)
+//{
+//     vector_t *vList;
+//     int i;
+//     
+//     // create a pointer to the frame we want to show
+//     vList = &vertexList[numVertices * keyFrame];
+//     
+//	//if (modelTex != NULL)
+//	//	// set the texture
+//	//	glBindTexture(GL_TEXTURE_2D, modelTex->texID);
+//     
+//     // display the textured model with proper lighting normals
+//     //glBegin(GL_TRIANGLES);
+//     for(i = 0; i < numTriangles; i++)
+//     {
+//          //CalculateNormal(vList[triIndex[i].meshIndex[0]].point,
+//          //     vList[triIndex[i].meshIndex[2]].point,
+//          //     vList[triIndex[i].meshIndex[1]].point);
+//
+//		//if (modelTex != NULL)
+//		//	glTexCoord2f(st[triIndex[i].stIndex[0]].s,
+//		//		st[triIndex[i].stIndex[0]].t);
+//
+//          //glVertex3fv(vList[triIndex[i].meshIndex[0]].point);
+//          
+//		//if (modelTex != NULL)
+//		//	glTexCoord2f(st[triIndex[i].stIndex[2]].s ,
+//		//		st[triIndex[i].stIndex[2]].t);
+//
+//          //glVertex3fv(vList[triIndex[i].meshIndex[2]].point);
+//          
+//		//if (modelTex != NULL)
+//		//	glTexCoord2f(st[triIndex[i].stIndex[1]].s,
+//		//		st[triIndex[i].stIndex[1]].t);
+//
+//          //glVertex3fv(vList[triIndex[i].meshIndex[1]].point);
+//     }
+//     //glEnd();
+//     
+//     return 0;
+//}
 
 // Unload()
 // desc: unloads model data from memory
