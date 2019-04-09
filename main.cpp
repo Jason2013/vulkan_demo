@@ -296,7 +296,7 @@ private:
         createTextureSampler();
         loadModel();
         createMyBuffer(buffer2);
-        createMyBuffer(buffer3);
+        //createMyBuffer(buffer3);
         createUniformBuffers();
         createDescriptorPool();
         createDescriptorSets();
@@ -354,7 +354,7 @@ private:
         }
 
         buffer2.Destroy();
-        buffer3.Destroy();
+        //buffer3.Destroy();
 
         for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
             vkDestroySemaphore(device, renderFinishedSemaphores[i], nullptr);
@@ -1087,11 +1087,12 @@ private:
 
     void loadModel() {
         int startFrame = 0;
-        const auto vList = &Ogro.vertexList[Ogro.numVertices * startFrame];
-        const auto nextVList = &Ogro.vertexList[Ogro.numVertices* (startFrame+1)];
+        //const auto vList = &Ogro.vertexList[Ogro.numVertices * startFrame];
+        const auto vList = &Ogro.vertexList[0];
+        //const auto nextVList = &Ogro.vertexList[Ogro.numVertices* (startFrame+1)];
 
         buffer2.vertices.clear();
-        for (int i = 0; i < Ogro.numVertices * 2; i++)
+        for (int i = 0; i < Ogro.numVertices * Ogro.numFrames; i++)
         {
             Vertex vt = {};
 
@@ -1106,20 +1107,20 @@ private:
 
         buffer2.indices = Ogro.indices;
 
-        buffer3.vertices.clear();
-        for (int i = 0; i < Ogro.numVertices * 2; i++)
-        {
-            Vertex vt = {};
+        //buffer3.vertices.clear();
+        //for (int i = 0; i < Ogro.numVertices * 2; i++)
+        //{
+        //    Vertex vt = {};
 
-            vt.pos.x = nextVList[i].point[0];
-            vt.pos.y = nextVList[i].point[1];
-            vt.pos.z = nextVList[i].point[2];
+        //    vt.pos.x = nextVList[i].point[0];
+        //    vt.pos.y = nextVList[i].point[1];
+        //    vt.pos.z = nextVList[i].point[2];
 
-            vt.texCoord = glm::vec2(Ogro.texCoords[i%Ogro.numVertices].s, Ogro.texCoords[i%Ogro.numVertices].t);
+        //    vt.texCoord = glm::vec2(Ogro.texCoords[i%Ogro.numVertices].s, Ogro.texCoords[i%Ogro.numVertices].t);
 
-            buffer3.vertices.push_back(vt);
-            }
-        buffer3.indices = Ogro.indices;
+        //    buffer3.vertices.push_back(vt);
+        //    }
+        //buffer3.indices = Ogro.indices;
     }
 
     void createVertexBuffer(void* vertexData, size_t size, VkBuffer& vertexBuffer, VkDeviceMemory& vertexBufferMemory) {
