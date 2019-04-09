@@ -32,7 +32,7 @@
 const int WIDTH = 800;
 const int HEIGHT = 600;
 
-const std::string MODEL_PATH = "models/chalet.obj";
+const std::string MODEL_PATH = "models/Tris.MD2";
 const std::string TEXTURE_PATH = "textures/Ogrobase.bmp";
 
 const int MAX_FRAMES_IN_FLIGHT = 2;
@@ -229,16 +229,16 @@ private:
     VkImageView textureImageView;
     VkSampler textureSampler;
 
-    std::vector<Vertex> vertices;
-    std::vector<uint32_t> indices;
-    VkBuffer vertexBuffer;
-    VkDeviceMemory vertexBufferMemory;
-    VkBuffer indexBuffer;
-    VkDeviceMemory indexBufferMemory;
+    //std::vector<Vertex> vertices;
+    //std::vector<uint32_t> indices;
+    //VkBuffer vertexBuffer;
+    //VkDeviceMemory vertexBufferMemory;
+    //VkBuffer indexBuffer;
+    //VkDeviceMemory indexBufferMemory;
 
     MyBuffer buffer1, buffer2, buffer3;
     //CMD2Model a{ NULL, NULL };// nullptr);// ("aa");// "Tris", (const char*)nullptr);
-    CMD2Model Ogro{ "models/Tris.MD2", NULL };// nullptr);// ("aa");// "Tris", (const char*)nullptr);
+    CMD2Model Ogro{ MODEL_PATH.c_str(), NULL };// nullptr);// ("aa");// "Tris", (const char*)nullptr);
 
     std::vector<VkBuffer> uniformBuffers;
     std::vector<VkDeviceMemory> uniformBuffersMemory;
@@ -288,9 +288,9 @@ private:
         createTextureImageView();
         createTextureSampler();
         loadModel();
-        createVertexBuffer(vertices.data(), sizeof(vertices[0]) * vertices.size(), vertexBuffer, vertexBufferMemory);
-        createIndexBuffer(indices.data(), sizeof(indices[0]) * indices.size(), indexBuffer, indexBufferMemory);
-        createMyBuffer(buffer1);
+        //createVertexBuffer(vertices.data(), sizeof(vertices[0]) * vertices.size(), vertexBuffer, vertexBufferMemory);
+        //createIndexBuffer(indices.data(), sizeof(indices[0]) * indices.size(), indexBuffer, indexBufferMemory);
+        //createMyBuffer(buffer1);
         createMyBuffer(buffer2);
         createMyBuffer(buffer3);
         createUniformBuffers();
@@ -349,13 +349,13 @@ private:
             vkFreeMemory(device, uniformBuffersMemory[i], nullptr);
         }
 
-        vkDestroyBuffer(device, indexBuffer, nullptr);
-        vkFreeMemory(device, indexBufferMemory, nullptr);
+        //vkDestroyBuffer(device, indexBuffer, nullptr);
+        //vkFreeMemory(device, indexBufferMemory, nullptr);
 
-        vkDestroyBuffer(device, vertexBuffer, nullptr);
-        vkFreeMemory(device, vertexBufferMemory, nullptr);
+        //vkDestroyBuffer(device, vertexBuffer, nullptr);
+        //vkFreeMemory(device, vertexBufferMemory, nullptr);
 
-        buffer1.Destroy();
+        //buffer1.Destroy();
         buffer2.Destroy();
         buffer3.Destroy();
 
@@ -1089,45 +1089,45 @@ private:
     }
 
     void loadModel() {
-        tinyobj::attrib_t attrib;
-        std::vector<tinyobj::shape_t> shapes;
-        std::vector<tinyobj::material_t> materials;
-        std::string err;
+        //tinyobj::attrib_t attrib;
+        //std::vector<tinyobj::shape_t> shapes;
+        //std::vector<tinyobj::material_t> materials;
+        //std::string err;
 
-        if (!tinyobj::LoadObj(&attrib, &shapes, &materials, &err, MODEL_PATH.c_str())) {
-            throw std::runtime_error(err);
-        }
+        //if (!tinyobj::LoadObj(&attrib, &shapes, &materials, &err, MODEL_PATH.c_str())) {
+        //    throw std::runtime_error(err);
+        //}
 
-        std::unordered_map<Vertex, uint32_t> uniqueVertices = {};
+        //std::unordered_map<Vertex, uint32_t> uniqueVertices = {};
 
-        for (const auto& shape : shapes) {
-            for (const auto& index : shape.mesh.indices) {
-                Vertex vertex = {};
+        //for (const auto& shape : shapes) {
+        //    for (const auto& index : shape.mesh.indices) {
+        //        Vertex vertex = {};
 
-                vertex.pos = {
-                    attrib.vertices[3 * index.vertex_index + 0],
-                    attrib.vertices[3 * index.vertex_index + 1],
-                    attrib.vertices[3 * index.vertex_index + 2]
-                };
+        //        vertex.pos = {
+        //            attrib.vertices[3 * index.vertex_index + 0],
+        //            attrib.vertices[3 * index.vertex_index + 1],
+        //            attrib.vertices[3 * index.vertex_index + 2]
+        //        };
 
-                vertex.texCoord = {
-                    attrib.texcoords[2 * index.texcoord_index + 0],
-                    1.0f - attrib.texcoords[2 * index.texcoord_index + 1]
-                };
+        //        vertex.texCoord = {
+        //            attrib.texcoords[2 * index.texcoord_index + 0],
+        //            1.0f - attrib.texcoords[2 * index.texcoord_index + 1]
+        //        };
 
-                vertex.color = {1.0f, 1.0f, 1.0f};
+        //        vertex.color = {1.0f, 1.0f, 1.0f};
 
-                if (uniqueVertices.count(vertex) == 0) {
-                    uniqueVertices[vertex] = static_cast<uint32_t>(vertices.size());
-                    vertices.push_back(vertex);
-                }
+        //        if (uniqueVertices.count(vertex) == 0) {
+        //            uniqueVertices[vertex] = static_cast<uint32_t>(vertices.size());
+        //            vertices.push_back(vertex);
+        //        }
 
-                indices.push_back(uniqueVertices[vertex]);
-            }
-        }
+        //        indices.push_back(uniqueVertices[vertex]);
+        //    }
+        //}
 
-        buffer1.vertices = vertices;
-        buffer1.indices = indices;
+        //buffer1.vertices = vertices;
+        //buffer1.indices = indices;
 
         int startFrame = 0;
         const auto vList = &Ogro.vertexList[Ogro.numVertices * startFrame];
