@@ -13,18 +13,7 @@
 
 */
 
-#include <windows.h>			// standard Windows app include
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-//#include <gl/gl.h>				// standard OpenGL include
-//#include <gl/glu.h>				// OpenGL utilties
-
 #include <vector>
-
-//#include "object.h"
-//#include "texture.h"
-//#include "vector.h"
 
 #define MAX_FRAMES 512
 
@@ -36,13 +25,6 @@ typedef struct
 {
    float point[3];
 } vector_t;
-
-//vector_t operator-(vector_t a, vector_t b);
-//vector_t operator*(float f, vector_t b);
-//vector_t operator/(vector_t a, vector_t b);
-//vector_t operator+(vector_t a, vector_t b);
-//
-//void CalculateNormal( float *p1, float *p2, float *p3 );
 
 
 /* 
@@ -90,7 +72,7 @@ typedef struct
 typedef struct
 {
    int ident;		 // identifies as MD2 file "IDP2"
-   int version;	 // mine is 8
+   int version;  	 // mine is 8
    int skinwidth;    // width of texture
    int skinheight;   // height of texture
    int framesize;    // number of bytes per frame
@@ -111,9 +93,7 @@ typedef struct
 
 class CMD2Model// : public CObject
 {
-//private:
 public:
-
      int numFrames;			// number of model frames
      int numVertices;         // number of vertices
      int numTriangles;        // number of triangles
@@ -126,48 +106,14 @@ public:
      std::vector<uint32_t> indices;
      std::vector<texCoord_t> texCoords;
 
-     //void SetupSkin(CTexture *thisTexture);
-
-//protected:
-public:
-	//modelState_t modelState;	// current model animation state
-     //int currentFrame;        // current frame # in animation
-     //int nextFrame;           // next frame # in animation
-
-public:
-     //float interpol;          // percent through current frame
-	 //modelState_t modelState;	// current model animation state
-
      CMD2Model(const char *modelFile = NULL, const char *skinFile = NULL);        // constructor
      ~CMD2Model();       // destructor
 
      // load model and skin/texture at the same time
-     int Load(const char *modelFile, const char *skinFile);
-
-     // load model only
-     int LoadModel(const char *modelFile);
-
-     //// load skin only
-     //int LoadSkin(const char *skinFile);
-
-     // set model's texture/skin
-     //int SetTexture(CTexture *texture);
-
-     // render model with interpolation to get animation
-     //int AnimateModel(int startFrame, int endFrame, float percent);
-	 //int AnimateModel(int startFrame, int endFrame, float percent, int & currentFrame, int & nextFrame, float & interpol);
-
-  //   // render a single frame
-  //   int RenderFrame(int keyFrame);
+     bool Load(const char *modelFile, const char *skinFile);
 
      // free memory of model
      void Unload();
-
-	//// set animation state of model
-	//void SetState(modelState_t state);	
-
-	//// retrieve animation state of model
-	//modelState_t GetState();
 };
 
 #endif
