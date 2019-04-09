@@ -20,7 +20,7 @@
 
 **Screencast:**
 
-[Watch on Youtube](https://youtu.be/hbSMGDGro1c)
+[Watch on Youtube](https://youtu.be/6NIXwDM4uRo)
 
 # Build from source code
 
