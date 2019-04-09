@@ -1082,50 +1082,9 @@ private:
     }
 
     void loadModel() {
-        //tinyobj::attrib_t attrib;
-        //std::vector<tinyobj::shape_t> shapes;
-        //std::vector<tinyobj::material_t> materials;
-        //std::string err;
-
-        //if (!tinyobj::LoadObj(&attrib, &shapes, &materials, &err, MODEL_PATH.c_str())) {
-        //    throw std::runtime_error(err);
-        //}
-
-        //std::unordered_map<Vertex, uint32_t> uniqueVertices = {};
-
-        //for (const auto& shape : shapes) {
-        //    for (const auto& index : shape.mesh.indices) {
-        //        Vertex vertex = {};
-
-        //        vertex.pos = {
-        //            attrib.vertices[3 * index.vertex_index + 0],
-        //            attrib.vertices[3 * index.vertex_index + 1],
-        //            attrib.vertices[3 * index.vertex_index + 2]
-        //        };
-
-        //        vertex.texCoord = {
-        //            attrib.texcoords[2 * index.texcoord_index + 0],
-        //            1.0f - attrib.texcoords[2 * index.texcoord_index + 1]
-        //        };
-
-        //        vertex.color = {1.0f, 1.0f, 1.0f};
-
-        //        if (uniqueVertices.count(vertex) == 0) {
-        //            uniqueVertices[vertex] = static_cast<uint32_t>(vertices.size());
-        //            vertices.push_back(vertex);
-        //        }
-
-        //        indices.push_back(uniqueVertices[vertex]);
-        //    }
-        //}
-
-        //buffer1.vertices = vertices;
-        //buffer1.indices = indices;
-
         int startFrame = 0;
         const auto vList = &Ogro.vertexList[Ogro.numVertices * startFrame];
         const auto nextVList = &Ogro.vertexList[Ogro.numVertices* (startFrame+1)];
-        //nextVList = &vertexList[numVertices*nextFrame];
 
         buffer2.vertices.clear();
         for (int i = 0; i < Ogro.numVertices * 2; i++)
@@ -1139,29 +1098,9 @@ private:
             vt.texCoord = glm::vec2(Ogro.texCoords[i%Ogro.numVertices].s, Ogro.texCoords[i%Ogro.numVertices].t);
 
             buffer2.vertices.push_back(vt);
-            //
         }
 
-        //transform(vertices.cbegin(), vertices.cend(), back_inserter(buffer2.vertices), [](Vertex x)
-        //{
-        //    Vertex y;
-        //    y = x;
-        //    y.pos.y = x.pos.y / 2.0f;
-        //    y.pos.x = (x.pos.x - 1.0f) / 2.0f;
-        //    y.pos.z = x.pos.z / 2.0f;
-        //    return y;
-        //});
         buffer2.indices = Ogro.indices;
-
-        //transform(vertices.cbegin(), vertices.cend(), back_inserter(buffer3.vertices), [](Vertex x)
-        //{
-        //    Vertex y;
-        //    y = x;
-        //    y.pos.y = x.pos.y / 2.0f;
-        //    y.pos.x = (x.pos.x + 1.0f) / 2.0f;
-        //    y.pos.z = x.pos.z / 2.0f;
-        //    return y;
-        //});
 
         buffer3.vertices.clear();
         for (int i = 0; i < Ogro.numVertices * 2; i++)
@@ -1175,7 +1114,6 @@ private:
             vt.texCoord = glm::vec2(Ogro.texCoords[i%Ogro.numVertices].s, Ogro.texCoords[i%Ogro.numVertices].t);
 
             buffer3.vertices.push_back(vt);
-            //
         }
         buffer3.indices = Ogro.indices;
     }
