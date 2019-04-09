@@ -240,16 +240,8 @@ private:
     VkImageView textureImageView;
     VkSampler textureSampler;
 
-    //std::vector<Vertex> vertices;
-    //std::vector<uint32_t> indices;
-    //VkBuffer vertexBuffer;
-    //VkDeviceMemory vertexBufferMemory;
-    //VkBuffer indexBuffer;
-    //VkDeviceMemory indexBufferMemory;
-
     MyBuffer buffer1, buffer2, buffer3;
-    //CMD2Model a{ NULL, NULL };// nullptr);// ("aa");// "Tris", (const char*)nullptr);
-    CMD2Model Ogro{ MODEL_PATH.c_str(), NULL };// nullptr);// ("aa");// "Tris", (const char*)nullptr);
+    CMD2Model Ogro{ MODEL_PATH.c_str() };
 
     std::vector<VkBuffer> uniformBuffers;
     std::vector<VkDeviceMemory> uniformBuffersMemory;
@@ -299,9 +291,6 @@ private:
         createTextureImageView();
         createTextureSampler();
         loadModel();
-        //createVertexBuffer(vertices.data(), sizeof(vertices[0]) * vertices.size(), vertexBuffer, vertexBufferMemory);
-        //createIndexBuffer(indices.data(), sizeof(indices[0]) * indices.size(), indexBuffer, indexBufferMemory);
-        //createMyBuffer(buffer1);
         createMyBuffer(buffer2);
         createMyBuffer(buffer3);
         createUniformBuffers();
@@ -360,13 +349,6 @@ private:
             vkFreeMemory(device, uniformBuffersMemory[i], nullptr);
         }
 
-        //vkDestroyBuffer(device, indexBuffer, nullptr);
-        //vkFreeMemory(device, indexBufferMemory, nullptr);
-
-        //vkDestroyBuffer(device, vertexBuffer, nullptr);
-        //vkFreeMemory(device, vertexBufferMemory, nullptr);
-
-        //buffer1.Destroy();
         buffer2.Destroy();
         buffer3.Destroy();
 
