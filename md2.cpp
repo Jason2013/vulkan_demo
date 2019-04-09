@@ -242,8 +242,8 @@ int CMD2Model::Load(const char *modelFile, const char *skinFile)
      for (i = 0; i < numTriangles; i++)
      {
          indices.push_back(triIndex[i].meshIndex[0]);
-         indices.push_back(triIndex[i].meshIndex[1]);
          indices.push_back(triIndex[i].meshIndex[2]);
+         indices.push_back(triIndex[i].meshIndex[1]);
      }
 
      texCoords.resize(numVertices);
