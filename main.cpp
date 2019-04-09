@@ -51,6 +51,17 @@ const bool enableValidationLayers = false;
 const bool enableValidationLayers = true;
 #endif
 
+#if defined(_DEBUG) && (defined(WIN32) || defined(_WIN32))
+
+#define _CRTDBG_MAP_ALLOC // record file name, line number info
+#include <crtdbg.h>
+
+#ifndef new
+#define new new (_NORMAL_BLOCK, __FILE__, __LINE__)
+#endif // new
+
+#endif
+
 VkResult CreateDebugUtilsMessengerEXT(VkInstance instance, const VkDebugUtilsMessengerCreateInfoEXT* pCreateInfo, const VkAllocationCallbacks* pAllocator, VkDebugUtilsMessengerEXT* pCallback) {
     auto func = (PFN_vkCreateDebugUtilsMessengerEXT) vkGetInstanceProcAddr(instance, "vkCreateDebugUtilsMessengerEXT");
     if (func != nullptr) {
@@ -1768,6 +1779,11 @@ private:
 };
 
 int main() {
+
+#if defined(_DEBUG) && (defined(WIN32) || defined(_WIN32))
+    _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+#endif
+
     HelloTriangleApplication app;
 
     try {
