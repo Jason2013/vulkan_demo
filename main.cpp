@@ -1683,12 +1683,7 @@ private:
         std::vector<char> buffer(fileSize);
 
         file.seekg(0);
-        file.read(buffer.data(), fileSize);
-
-        if (!file)
-        {
-            std::cout << "error: only " << file.gcount() << " could be read";
-        }
+        file.read(buffer.data(), buffer.size());
 
         file.close();
 
