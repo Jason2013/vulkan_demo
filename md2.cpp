@@ -40,7 +40,6 @@ bool CMD2Model::Load(const char *modelFile, const char *skinFile)
 
      stIndex_t *stPtr;                       // texture data
      frame_t *frame;                         // frame data
-     vector_t *vertexListPtr;                // index variable
      mesh_t *bufIndexPtr;                    // index variables
      int i, j;                               // index variables
 
@@ -73,7 +72,7 @@ bool CMD2Model::Load(const char *modelFile, const char *skinFile)
      {
           frame = (frame_t*)&buffer[modelHeader->offsetFrames + frameSize * j];
 
-          vertexListPtr = (vector_t*)&vertexList[numVertices * j];
+          vector_t* vertexListPtr = (vector_t*)&vertexList[numVertices * j];
           for (i = 0; i < numVertices; i++)
           {
                vertexListPtr[i].point[0] = frame->scale[0] * frame->fp[i].v[0] + frame->translate[0];
