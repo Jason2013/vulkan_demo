@@ -1084,10 +1084,7 @@ private:
     }
 
     void loadModel() {
-        int startFrame = 0;
-        //const auto vList = &Ogro.vertexList[Ogro.numVertices * startFrame];
         const auto vList = &Ogro.vertexList[0];
-        //const auto nextVList = &Ogro.vertexList[Ogro.numVertices* (startFrame+1)];
 
         mesh.vertices.clear();
         for (int i = 0; i < Ogro.numVertices * Ogro.numFrames; i++)
