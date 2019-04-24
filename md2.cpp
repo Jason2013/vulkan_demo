@@ -136,7 +136,7 @@ bool CMD2Model::Load(const char *modelFile, const char *skinFile)
 
      // close file and free memory
      fclose(filePtr);
-	delete buffer;
+     delete[] buffer;
 
      return true;
 }
