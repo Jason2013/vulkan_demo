@@ -1685,6 +1685,11 @@ private:
         file.seekg(0);
         file.read(buffer.data(), fileSize);
 
+        if (!file)
+        {
+            std::cout << "error: only " << file.gcount() << " could be read";
+        }
+
         file.close();
 
         return buffer;
