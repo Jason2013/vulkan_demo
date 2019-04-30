@@ -1407,14 +1407,13 @@ private:
         }
 
         UniformBufferObject ubo = {};
-        auto a = glm::rotate(glm::mat4(1.0f), /*time **/ glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-        auto b = glm::rotate(glm::mat4(1.0f), /*time **/ glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-        ubo.model = b * a;
+        auto m = glm::rotate(glm::mat4(1.0f), glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        ubo.model = glm::rotate(m, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
         ubo.view = glm::lookAt(glm::vec3(0.0f, 30.0f, 80.0f), glm::vec3(0.0f, 5.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
         ubo.proj = glm::perspective(glm::radians(45.0f), swapChainExtent.width / (float) swapChainExtent.height, 0.1f, 200.0f);
         ubo.proj[1][1] *= -1;
 
-        ubo.interp = currentFrameSpanTime/frameTime;// (glm::sin(time) + 1.0f) / 2.0f;
+        ubo.interp = currentFrameSpanTime/frameTime;
 
         void* data;
         vkMapMemory(device, uniformBuffersMemory[currentImage], 0, sizeof(ubo), 0, &data);
